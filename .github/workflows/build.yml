@@ -17,4 +17,4 @@ jobs:
           python-version: 3.11
           cache: 'poetry'
       - run: poetry install
-      - run: poetry run mkdocs gh-deploy
+      - run: poetry run mkdocs gh-deploy --force
