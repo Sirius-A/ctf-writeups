@@ -5,12 +5,14 @@ repo_url: https://github.com/Sirius-A/ctf-writeups
 
 theme:
   name: material
+  features:
+    - navigation.sections
+    - navigation.indexes
   palette:
-
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: blue grey
+      primary: black
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
