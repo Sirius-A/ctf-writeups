@@ -2,12 +2,16 @@
 
 site_name: SiriusA's CTF Writeups
 repo_url: https://github.com/Sirius-A/ctf-writeups
+edit_uri: edit/main/docs/
 
 theme:
   name: material
   features:
     - navigation.sections
     - navigation.indexes
+    - navigation.expand
+    - navigation.footer
+    - content.action.view
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
@@ -26,6 +30,7 @@ theme:
         name: Switch to light mode
   icon:
     logo: material/file-document-multiple-outline
+    view: material/pencil
 
 markdown_extensions:
   - admonition
@@ -36,4 +41,5 @@ markdown_extensions:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
 
-
+plugins:
+  - tags
