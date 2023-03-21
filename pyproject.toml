@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ctf-writeups"
+version = "0.1.0"
+description = "CTF writeups and braindumps"
+authors = ["Fabio Zuber"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+mkdocs-material = "9.*"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
