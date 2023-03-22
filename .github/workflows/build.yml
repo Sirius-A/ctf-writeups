@@ -1,11 +1,7 @@
 name: ci 
 on:
-  push:
-    branches:
-      - main
-permissions:
-  pages: write
-  id-token: write   # to verify the deployment originates from an appropriate source
+  push
+      
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,7 +15,7 @@ jobs:
           cache: 'poetry'
       - run: poetry install
       - run: poetry run mkdocs build
-      - uses: upload-pages-artifact
+      - uses: upload-pages-artifact@v1
         with:
           path: site/
 
