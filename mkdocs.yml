@@ -2,7 +2,7 @@
 
 site_name: SiriusA's CTF Writeups
 repo_url: https://github.com/Sirius-A/ctf-writeups
-edit_uri: edit/main/docs/
+edit_uri: tree/main/docs/
 
 theme:
   name: material
