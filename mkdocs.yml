@@ -43,3 +43,4 @@ markdown_extensions:
 
 plugins:
   - tags
+  - social
