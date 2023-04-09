@@ -6,8 +6,7 @@ A repository to collect my writeups and notes on CTF challenges I did.
 https://sirius-a.github.io/ctf-writeups/
 
 
-
-## Developer Getting started
+## Getting Started
 
 The page is rendered via [mkdocs-material](https://github.com/squidfunk/mkdocs-material)
 using [poetry](https://python-poetry.org/) as the python package manager.

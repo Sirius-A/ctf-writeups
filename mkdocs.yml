@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 
 site_name: SiriusA's CTF Writeups
+site_description: Colletions of CTF writeups and other security tips
 site_url: https://sirius-a.github.io/ctf-writeups/
 repo_url: https://github.com/Sirius-A/ctf-writeups
 edit_uri: tree/main/docs/
