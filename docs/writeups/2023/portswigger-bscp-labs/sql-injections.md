@@ -155,5 +155,5 @@ Intruder Settings:
 - In results: show `Response received`, which is the response time.
   - Sort by that and read PW
 
-![blind-timing-data](img/blind-timing-data.png)
+![blind-timing-data](images/blind-timing-data.png)
 
