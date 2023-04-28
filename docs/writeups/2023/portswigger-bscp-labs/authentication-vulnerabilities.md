@@ -56,4 +56,33 @@ X-Forwarded-For:§1§
 username=ec2-user&password=§dadadaaaaaaaaaaaaaaaaaaaaaa1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111a
 ```
 
+## Broken brute-force protection, IP block
+
+The flaw in this Lab is that the request counter gets reset after each
+successful login. --> We can test one combination and then login with the
+provided credentials.
+
+Prepare two lists
+- **Users:** `carlos` and `wiener` turn by turn (100x)
+- **Passwords:** `entry from PW list` and `peter` switching each time.
+
+How to do that quickly in vim:
+
+```
+# Userlist
+100i carlos<CR>wiener<ESC>
+:%y+
+
+# Within PW list
+gg
+qq
+o peter<ESC>j
+q
+200@q
+:%y+
+```
+
+In the Intruder Settings set the max concurrent Payloads to 1 and a delay of  
+`300 ms`.
+
 
