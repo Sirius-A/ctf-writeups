@@ -30,3 +30,10 @@ if (isAdmin) {
 ```
 2. Navigate to `/admin-jquaos`
 
+
+## User role controlled by request parameter
+
+1. Login as `wiener:peter`
+2. Set the `Admin` cookie to `true`
+3. Navigate to `/admin`
+
