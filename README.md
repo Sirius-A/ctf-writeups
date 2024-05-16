@@ -3,7 +3,7 @@
 A repository to collect my writeups and notes on CTF challenges I did.
 
 
-https://sirius-a.github.io/ctf-writeups/
+https://ctf.zuberfab.io/
 
 
 ## Getting Started
